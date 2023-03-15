@@ -15,7 +15,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Cari Uang <?= date('Y') ?> </span>
+                        <span>Copyright &copy;  Fastabiqul Khoirot <?= date('Y') ?> </span>
                     </div>
                 </div>
             </footer>
