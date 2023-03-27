@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        //login helper di application/helper & set_autoload helper
+        is_logged_in();
+    }
     public function index(){
         $data['title'] = 'My Profile';
         $data['user'] = $this->db->get_where('user', ['email' =>
