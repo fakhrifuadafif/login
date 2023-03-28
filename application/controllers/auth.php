@@ -11,7 +11,10 @@ class auth extends CI_Controller
     }
     public function index()
     {
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
+        if ($this->session->userdata('email')){
+            redirect('user');
+        }
+        $this->form_validation->set_rules('email', 'email', 'required|trim|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required|trim');
 
         if($this->form_validation->run() == false){
@@ -41,7 +44,7 @@ class auth extends CI_Controller
                 //cek password 
                 if(password_verify($password, $user['password'])){
                     $data = [
-                        'email' => $user['Email'],
+                        'email' => $user['email'],
                         'role_id' => $user['role_id']
                     ]; 
                     $this->session->set_userdata($data);
@@ -75,9 +78,12 @@ class auth extends CI_Controller
     }
     public function regis()
     {
-        $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+        if ($this->session->userdata('email')){
+            redirect('user');
+        }
+        $this->form_validation->set_rules('nama', 'name', 'required|trim');
 
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+        $this->form_validation->set_rules('email', 'email', 'required|trim|valid_email|is_unique[user.email]', [
             'is_unique' =>'<div class="alert alert-danger" role="alert">
             This email has already registered!
           </div>'
@@ -111,9 +117,9 @@ class auth extends CI_Controller
             ];
             $this->db->insert('user',$data);
             $this->session->set_flashdata('message', 
-        '<div class="alert alert-success" role="alert" style="text-align:center;">
+            '<div class="alert alert-success" role="alert" style="text-align:center;">
             Congratulation! your account has been created!<br>Please login!
-        </div>');
+            </div>');
             redirect('auth');
         }
     }
