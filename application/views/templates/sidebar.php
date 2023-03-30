@@ -48,13 +48,13 @@
                     <li class="nav-item">
                     <?php endif; ?> 
 
-                <a class="nav-link" href="<?= base_url($sm['url']);?>">
+                <a class="nav-link pb-0" href="<?= base_url($sm['url']);?>">
                     <i class="<?=$sm['icon']; ?>"></i>
                     <span><?= $sm['title']; ?></span></a>
             </li>
                 <?php endforeach; ?>
                 <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider mt-3">
 
             <?php endforeach; ?>            
             
@@ -65,14 +65,14 @@
             </div>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('auth/logout/')?>">
+                <a class="nav-link pb-0" href="<?= base_url('auth/logout/')?>">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
                     <span>User Logout </span></a>
             </li>
 
 
               <!-- Divider -->
-              <hr class="sidebar-divider">
+              <hr class="sidebar-divider mt-3">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
