@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-lg-6">
 
-        <?= $this->session->flashdata('message');?>
+    <?= $this->session->flashdata('message');?>
     <h5>Role : <?= $role['role']?></h5>
         <table class="table table-hover">
     <thead>
@@ -26,9 +26,9 @@
       <td><?= $m['menu']; ?></td>
       <td>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" <?= check_access($role['id'], $m['id']);?>>
-   
-</div>
+        <input class="form-check-input" type="checkbox" <?= check_access($role['id'], $m['id']);?>
+        data-role="<?=$role['id'];?>" data-menu="<?= $m['id'];?>">
+      </div>
       </td>
     </tr>
     <?php $i++; ?>
