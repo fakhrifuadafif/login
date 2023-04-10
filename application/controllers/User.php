@@ -8,12 +8,13 @@ class User extends CI_Controller
         parent::__construct();
         //login helper di application/helper & set_autoload helper
         is_logged_in();
+        $this->load->library('form_validation');
     }
     public function index(){
         $data['title'] = 'My Profile';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-        // echo 'selamat datang ' . $data['user']['Nama'];
+        
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -23,40 +24,59 @@ class User extends CI_Controller
     }
 
     public function edit(){
+
         $data['title'] = 'Edit Profile';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
-        $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
-      
+        $this->load->helper(array('form','url'));
+        
+
+        $this->form_validation->set_rules('name', 'Full Name', 'trim|required');
+     
     if ($this->form_validation->run() == false) {
+        
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('user/edit', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footer'); 
+
     } 
     else 
     {
-            $name = $this->input->post('name');
-            $email = $this->input->post('email');
+         
+        $name = $this->input->post('name');
+        $email = $this->input->post('email');
 
-            // $upload_image = $_FILES['image'];
-            // var_dump($upload_image);
-            // die;
+        $upload_image = $_FILES['image'];
 
-            $this->db->set('name', $name);
-            $this->db->where('email', $email);
-            $this->db->update('user');
-           
-            $this->session->set_flashdata('message', 
-            '<div class="alert alert-success" role="alert" style="text-align:center;">
-            Your profile has been updated!</div>');
-            redirect('user');
-            
+        if($upload_image){
+             $config['allowed_types'] = 'gif|jppg|png';
+             $config['max_size']     = '2048';
+             $config['upload_path'] = './assets/img/profile/';
+
+             $this->load->library('upload', $config);
+
+             if ($this->upload->do_upload('image')){
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('image', $new_image);
+             } else {
+                echo $this->upload->display_errors();
+             }
         }
 
-        
+
+        $this->db->set('name', $name);
+        $this->db->where('email', $email);
+        $this->db->update('user');
+        $this->session->set_flashdata('message', 
+        '<div class="alert alert-success" role="alert" style="text-align:center;">
+        Your profile has been updated!</div>');
+        redirect('user');
+            
+        }  
+        // var_dump($this->form_validation->run());
+        // die;
     }
-    
 }

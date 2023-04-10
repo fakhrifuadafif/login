@@ -14,9 +14,9 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="nama" class="col-sm-2 col-form-label">Full Name</label>
+      <label for="name" class="col-sm-2 col-form-label">Full Name</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="name" name="name" value="<?= $user['name'];?>">
+        <input type="text" class="form-control" id="name" name="name"value="<?= $user['name'];?>">
         <?= form_error('name','<small class="text-danger pl-3" >','</small>' ); ?>
       </div>
     </div>
